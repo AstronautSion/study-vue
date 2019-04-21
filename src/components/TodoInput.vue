@@ -25,7 +25,7 @@ export default {
   methods: { 
     addTodo(){
       if(this.newTodoItem.trim() !== ''){
-        this.$emit('addTodoItem', this.newTodoItem)
+        this.$store.commit('addOneItem', this.newTodoItem);
         this.clearInput();
       }else{
         this.showModal = !this.showModal;
