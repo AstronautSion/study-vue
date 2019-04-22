@@ -194,3 +194,79 @@ methods: {
 }
 ```
 
+## Helper
+store에 있는 아래 4가지 속성들을 간편하게 코딩
+- state -> mapState
+- getters -> mapGetters
+- mutations -> mapMutations
+- actions -> mapActions
+
+## 헬퍼사용법
+- 헬퍼를 사용하고자 하는 vue 파일에서 아래와 같이 해당 헬퍼를 로딩
+```javascript
+//app.vue
+import{ mapState, mapGetters, mapMutations, mapActions } from 'vuex'
+
+export default{
+  computed() {...mapState(['num']), ...mapGetters(['countedNum']) },
+  methods: { ...mapMutations(['clickBtn']), ...mapActions(['asyncClickBtn'])}
+}
+
+// ...은 ES6의 Object Spread Operator 임
+
+```
+
+- Object Spread Operator 참고<br>
+https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/Spread_syntax
+
+## 프로젝트 모듈화 방법1
+
+```javascript
+
+//store.js
+import Vue from 'vue'
+import Vuex from 'vuex'
+import * from getters from 'store/getters.js'
+import * from mutations from 'store/mutations.js'
+import * from actions from 'store/actions.js'
+
+export const store = new Vuex.Store({
+  state: {},
+  getters: getters,
+  mutations: mutations,
+  actions: actions
+});
+
+// mutations.js
+const addOneItem = (state, todoItem) => {...}
+const removeOneItem =(state, payload) => {...}
+const toggleOneItem = (state, payload) => {...}
+const clearAllItem = (state) => {...}
+export {addOneItem, removeItem, toggleOneItem, clearAllItem }
+
+```
+
+## 프로젝트 모듈화 방법2
+
+```javascript
+
+//store.js
+import Vue from 'vue'
+import Vuex from 'vuex'
+import * from todo from 'modules/todo.js'
+
+export const store = new Vuex.Store({
+  modules: {
+    moduleA : todo, //모듈 명칭 : 모듈 파일명
+    todo //todo : todo
+  }
+});
+
+//todo.js
+const state = {}
+const getters = {}
+const mutations = {}
+const actions = {}
+
+```
+

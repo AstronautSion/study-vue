@@ -13,7 +13,8 @@
 </template>
 
 <script>
-import Modal from './common/Modal.vue';
+import Modal from './common/Modal.vue'
+import { mapMutations } from 'vuex'
 
 export default {
   data(){
@@ -23,9 +24,11 @@ export default {
     }
   },            
   methods: { 
+    ...mapMutations(['addOneItem']),
+    
     addTodo(){
       if(this.newTodoItem.trim() !== ''){
-        this.$store.commit('addOneItem', this.newTodoItem);
+        this.addOneItem(this.newTodoItem);
         this.clearInput();
       }else{
         this.showModal = !this.showModal;
